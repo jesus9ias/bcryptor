@@ -7,10 +7,7 @@ import {
     ExtensionContext,
     StatusBarAlignment
 } from 'vscode';
-import {
-    hashSync,
-    genSaltSync
-} from 'bcryptjs';
+import { makeHash } from './utils/hasher';
 
 export function activate(context: ExtensionContext) {
 
@@ -77,7 +74,7 @@ class BcryptButton {
     }
 
     private _makeHash(text: string) {
-        return hashSync(text, genSaltSync(12));
+        return makeHash(text);
     }
 
     dispose() {
