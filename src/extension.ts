@@ -7,17 +7,23 @@ import {
     ExtensionContext,
     StatusBarAlignment
 } from 'vscode';
-import { makeHash } from './utils/hasher';
+import { makeHash, matchHash } from './utils/hasher';
 
 export function activate(context: ExtensionContext) {
 
     const StatusBarButtons = new StatusBarButtonsController();
 
-    const bcryptLine = commands.registerCommand('extension.bcrypt-line', () => {
+    const bcryptLineButton = commands
+        .registerCommand('extension.bcrypt-line', () => {
         StatusBarButtons.bcryptLine();
     });
+    const matchLineButton = commands
+        .registerCommand('extension.match-line', () => {
+        StatusBarButtons.matchLine();
+    });
 
-    context.subscriptions.push(bcryptLine);
+    context.subscriptions.push(bcryptLineButton);
+    context.subscriptions.push(matchLineButton);
     context.subscriptions.push(StatusBarButtons);
 }
 
@@ -38,9 +44,27 @@ class BcryptButton {
         this._getEditor();
         const parts = this._getParts();
 
-        const result = parts.map(line => this._makeHash(line));
+        const result = parts.map(line => {
+            return this._makeHash(line.trim());
+        });
 
         this._updateText(result.join('\n'));
+    }
+
+    public matchLine() {
+        this._getEditor();
+        const parts = this._getParts();
+        const text = parts[0].trim();
+        const hash = parts[1];
+        if (text && hash) {
+            if (matchHash(text, hash)) {
+                window.showInformationMessage('Text Match with bcrypt hash');
+            } else {
+                window.showWarningMessage('Text didn`t match with bcrypt hash');
+            }
+        } else {
+            window.showErrorMessage('Need to provide two lines: first line is the plain text and second line is bcrypted text');
+        }
     }
 
     public checkForShowing() {
@@ -85,9 +109,11 @@ class BcryptButton {
 class StatusBarButtonsController {
     private _disposable: Disposable;
     private _bcryptLineButton: BcryptButton;
+    private _matchLineButton: BcryptButton;
 
     constructor() {
         this._bcryptLineButton = new BcryptButton('extension.bcrypt-line', 'Bcrypt Line');
+        this._matchLineButton = new BcryptButton('extension.match-line', 'Match Line');
 
         let subscriptions: Disposable[] = [];
         window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
@@ -98,6 +124,7 @@ class StatusBarButtonsController {
 
     private showButtons() {
         this._bcryptLineButton.checkForShowing();
+        this._matchLineButton.checkForShowing();
     }
 
     private _onEvent() {
@@ -106,6 +133,10 @@ class StatusBarButtonsController {
 
     public bcryptLine() {
         this._bcryptLineButton.bcryptLine();
+    }
+
+    public matchLine() {
+        this._matchLineButton.matchLine();
     }
 
     dispose() {

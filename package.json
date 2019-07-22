@@ -19,6 +19,10 @@
             {
                 "command": "extension.bcrypt-line",
                 "title": "Bcrypt Line"
+            },
+            {
+                "command": "extension.match-line",
+                "title": "Match Line"
             }
         ]
     },
