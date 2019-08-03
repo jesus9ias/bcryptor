@@ -18,11 +18,11 @@
         "commands": [
             {
                 "command": "extension.bcrypt-line",
-                "title": "Bcrypt Line"
+                "title": "Bcrypt Lines"
             },
             {
                 "command": "extension.match-line",
-                "title": "Match Line"
+                "title": "Match Hash"
             }
         ]
     },
