@@ -27,6 +27,8 @@ You can verify if plain text corresponds to some hash:
 
 If not enough lines are selected will get an error message.
 
+![alt text](images/usage.gif "Usage Example")
+
 ## Release Notes
 
 This first version is oriented to solve the needs of hashing and verifing text in and simple and fast way without going to Internet or external tool.
