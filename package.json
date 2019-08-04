@@ -1,14 +1,18 @@
 {
     "name": "bcryptor",
-    "displayName": "bcryptor",
-    "description": "hash text on editor with bcrypt",
-    "version": "0.0.1",
+    "displayName": "Bcryptor Hash on editor",
+    "description": "Hash text with bcrypt and match with plain text on editor",
+    "version": "1.0.0",
     "publisher": "jesusescamilla",
     "engines": {
         "vscode": "^1.36.0"
     },
     "categories": [
         "Other"
+    ],
+    "keywords": [
+        "bcrypt",
+        "hash"
     ],
     "activationEvents": [
         "*"
@@ -43,5 +47,11 @@
         "@types/bcrypt": "^3.0.0",
         "@types/bcryptjs": "^2.4.2",
         "bcryptjs": "^2.4.3"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jesus9ias/bcryptor.git"
+    },
+    "homepage": "https://github.com/jesus9ias/bcryptor/blob/master/README.md",
+    "icon": "images/icon.png"
 }
