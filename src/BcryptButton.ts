@@ -2,8 +2,7 @@ import {
     window,
     TextEditor,
     StatusBarItem,
-    StatusBarAlignment,
-    QuickPickOptions
+    StatusBarAlignment
 } from 'vscode';
 import { makeHash, matchHash } from './utils/hasher';
 
