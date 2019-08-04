@@ -38,13 +38,13 @@ And maximum is 18 becouse it is too cpu expensive, and the author preffers to re
 
 ### 1.0.0
 
-* Hash with min and max 18 rounds.
+* Hash with min 6 and max 18 rounds.
 * Match hashed text.
 
 ## Next Release
 
 * Update Round cost range.
-* Match more than one has per selection.
+* Match more than one hash per selection.
 
 ## Contributing
 
