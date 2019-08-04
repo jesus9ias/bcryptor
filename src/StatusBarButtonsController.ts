@@ -10,8 +10,8 @@ class StatusBarButtonsController {
     private _matchLineButton: BcryptButton;
 
     constructor() {
-        this._bcryptLineButton = new BcryptButton('extension.bcrypt-line', 'Bcrypt Line');
-        this._matchLineButton = new BcryptButton('extension.match-line', 'Match Line');
+        this._bcryptLineButton = new BcryptButton('extension.bcrypt-line', 'Bcrypt Lines');
+        this._matchLineButton = new BcryptButton('extension.match-line', 'Match Lines');
 
         let subscriptions: Disposable[] = [];
         window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
@@ -30,7 +30,7 @@ class StatusBarButtonsController {
     }
 
     public bcryptLine() {
-        this._bcryptLineButton.bcryptLine();
+        this._bcryptLineButton.selectCost();
     }
 
     public matchLine() {
@@ -40,6 +40,10 @@ class StatusBarButtonsController {
     dispose() {
         this._disposable.dispose();
     }
+
+    onDidAccept() {
+        console.log('ok');
+    };
 }
 
 export default StatusBarButtonsController;

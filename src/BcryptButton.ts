@@ -2,7 +2,8 @@ import {
     window,
     TextEditor,
     StatusBarItem,
-    StatusBarAlignment
+    StatusBarAlignment,
+    QuickPickOptions
 } from 'vscode';
 import { makeHash, matchHash } from './utils/hasher';
 
@@ -19,12 +20,28 @@ class BcryptButton {
         this._switchStatusBarItem(this._getEditor());
     }
 
-    public bcryptLine() {
+    public selectCost() {
+        const quickPicker = window.createQuickPick();
+        const items = ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'];
+        quickPicker.items =items.map(label => ({ label }));
+        quickPicker.onDidChangeSelection(selection => {
+            quickPicker.dispose()
+            if (selection[0]) {
+                this.bcryptLine(Number(selection[0].label));
+            } else {
+                console.log('Non accepted value')
+            }
+        });
+        quickPicker.onDidHide(() => quickPicker.dispose());
+        quickPicker.show();
+    }
+
+    public bcryptLine(cost: number) {
         this._getEditor();
         const parts = this._getParts();
 
         const result = parts.map(line => {
-            return this._makeHash(line.trim());
+            return this._makeHash(line.trim(), cost);
         });
 
         this._updateText(result.join('\n'));
@@ -76,8 +93,8 @@ class BcryptButton {
         });
     }
 
-    private _makeHash(text: string) {
-        return makeHash(text);
+    private _makeHash(text: string, cost: number) {
+        return makeHash(text, cost);
     }
 
     dispose() {
